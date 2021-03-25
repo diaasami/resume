@@ -1,4 +1,5 @@
 from html.parser import HTMLParser
+import sys
 import requests
 
 class GetLinksParser(HTMLParser):
@@ -21,28 +22,35 @@ class IsCustomized404Page(HTMLParser):
 
         if '404' in data.split():
             self.is_custom_404_page = True
+        elif data.find('Not Found') > -1:
+            self.is_custom_404_page = True
+
 
 if __name__ == "__main__":
     parser = GetLinksParser()
-    parser.feed(open("./Downloads/diaasami_resume.html").read())
+    parser.feed(open(sys.argv[1]).read())
     links = parser.links
-    
-    #[print(l) for l in parser.links]
+    parser.close()
+
+    failed = 0
+
+    links = ["http://www.kmychina.com.cn/asp_bin/UploadFile/20123515173279.jpg"]
 
     for link in links:
-        print(f"GETting {link}")
         try:
+            #print(f"GETting {link}")
             r = requests.get(link)
-            if 'content-type' in r.headers and headers['content-type'].startswith('text/html'):
+            if 'Content-Type' in r.headers and r.headers['Content-Type'].startswith('text/html'):
                 parser = IsCustomized404Page()
                 parser.feed(r.text)
+                parser.close()
                 probable_404_page = parser.is_custom_404_page
                 if probable_404_page:
-                    print("Link is probably customized 404 page")
+                    print(f"Link {link} is probably customized 404 page")
+                    failed += 1
             
         except requests.RequestException as e:
-            print(e)
+            print(f"Error {e} getting {link}")
+            failed += 1
 
-
-
-
+    sys.exit(1 if failed else 0)
