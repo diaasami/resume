@@ -34,8 +34,6 @@ if __name__ == "__main__":
 
     failed = 0
 
-    links = ["http://www.kmychina.com.cn/asp_bin/UploadFile/20123515173279.jpg"]
-
     for link in links:
         try:
             #print(f"GETting {link}")
