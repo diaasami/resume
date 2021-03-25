@@ -5,7 +5,7 @@ name: Weekly link checker
 # Controls when the action will run. 
 on:
   schedule:
-    - cron: '25 22 * * *' # run at 00:00 on Saturday
+    - cron: '0 0 * * 6' # run at 00:00 on Saturday
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
