@@ -2,20 +2,24 @@ from html.parser import HTMLParser
 import sys
 import requests
 
+
 class GetLinksParser(HTMLParser):
     def __init__(self):
         HTMLParser.__init__(self)
         self.links = []
+
     def handle_starttag(self, tag, attrs):
         if tag == 'a':
             d_attrs = dict(attrs)
             if 'href' in d_attrs and d_attrs['href'].startswith('http'):
                 self.links.append(d_attrs['href'])
 
+
 class IsCustomized404Page(HTMLParser):
     def __init__(self):
         HTMLParser.__init__(self)
         self.is_custom_404_page = False
+
     def handle_data(self, data):
         if self.is_custom_404_page:
             return
@@ -36,7 +40,7 @@ if __name__ == "__main__":
 
     for link in links:
         try:
-            #print(f"GETting {link}")
+            # print(f"GETting {link}")
             r = requests.get(link)
             if 'Content-Type' in r.headers and r.headers['Content-Type'].startswith('text/html'):
                 parser = IsCustomized404Page()
@@ -46,7 +50,7 @@ if __name__ == "__main__":
                 if probable_404_page:
                     print(f"Link {link} is probably customized 404 page")
                     failed += 1
-            
+
         except requests.RequestException as e:
             print(f"Error {e} getting {link}")
             failed += 1
