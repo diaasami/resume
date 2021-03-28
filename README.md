@@ -1,6 +1,7 @@
 # resume
 
 Since my resume is in HTML, I can treat it as a software project and apply standard practices to it.
+
 Most importantly check dead links periodically!
 
 Here are the checks I have in mind so far:
