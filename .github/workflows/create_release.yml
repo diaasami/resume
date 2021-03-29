@@ -27,7 +27,7 @@ jobs:
       
       # Setup
       - name: Install dependencies
-        run: sudo apt-get install chromium
+        run: sudo apt-get install chromium-browser
       
       - name: Get current date
         id: date
