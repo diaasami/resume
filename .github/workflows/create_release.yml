@@ -28,7 +28,33 @@ jobs:
       # Setup
       - name: Install dependencies
         run: sudo apt-get install chromium
+      
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
 
       # Runs a single command using the runners shell
       - name: Create PDF
         run: chromium --headless --print-to-pdf="output_chrome.pdf" $GITHUB_WORKSPACE/diaasami_resume.html
+      
+      - name: create_release
+        uses: actions/create-release@v1
+        id: create_release
+        with:
+          draft: false
+          prerelease: false
+          release_name: ${{ steps.date.outputs.date }}
+          #${{ steps.version.outputs.version }}
+          tag_name: ${{ github.ref }}
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+       
+      - name: upload artifact
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: output_chrome.pdf
+          asset_name: diaasami_resume.pdf
+          asset_content_type: application/pdf
