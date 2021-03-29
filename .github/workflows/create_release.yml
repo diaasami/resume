@@ -35,7 +35,7 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Create PDF
-        run: chromium --headless --print-to-pdf="output_chrome.pdf" $GITHUB_WORKSPACE/diaasami_resume.html
+        run: chromium --headless --disable-gpu --print-to-pdf="output_chrome.pdf" $GITHUB_WORKSPACE/diaasami_resume.html
       
       - name: create_release
         uses: actions/create-release@v1
