@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI
+name: Create release
 
 # Controls when the action will run. 
 on:
@@ -27,14 +27,8 @@ jobs:
       
       # Setup
       - name: Install dependencies
-        run: apt-get install chromium
+        run: sudo apt-get install chromium
 
       # Runs a single command using the runners shell
       - name: Create PDF
         run: chromium --headless --print-to-pdf="output_chrome.pdf" $GITHUB_WORKSPACE/diaasami_resume.html
-
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
