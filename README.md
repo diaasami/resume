@@ -13,4 +13,4 @@ Here are the checks I have in mind so far:
 1. Deploy: Create PDF from tags ([WIP](https://github.com/diaasami/resume/actions/workflows/create_release.yml))
 
 I believe the same can be done even if the resume is not in HTML:
-* Links and text can be extracted from PDFs, links can be checked for validity and text spell-checked.
+* Links and text [can be extracted from PDFs](https://github.com/metachris/pdfx), links can be checked for validity and text spell-checked.
